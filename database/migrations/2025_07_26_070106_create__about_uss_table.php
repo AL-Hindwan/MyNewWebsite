@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-      
-        Schema::create('_medical_staffs_tabel', function (Blueprint $table) {
+     
+        Schema::create('_about_uss', function (Blueprint $table) {
     $table->id();
-    $table->string('name');       // اسم الطبيب
-    $table->string('specialty');  // التخصص
-    $table->text('bio');          // نبذة تعريفية
-    $table->string('image');      // صورة الطبيب
+    $table->text('content');      // المحتوى النصي "من نحن"
+    $table->string('image')->nullable(); // صورة اختيارية
     $table->timestamps();
 });
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_medical_staffs_tabel');
+        Schema::dropIfExists('_about_uss');
     }
 };

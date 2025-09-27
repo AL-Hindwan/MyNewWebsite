@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+    
         Schema::create('servicess_tabel', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('title');       // اسم التخصص
+    $table->text('description');  // الوصف
+     $table->text('details'); 
+    $table->string('icon')->nullable();  // أيقونة أو صورة
+    $table->timestamps();
+});
+
     }
 
     /**

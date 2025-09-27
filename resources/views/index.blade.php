@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{asset('/css/style.css')}}" />
         <link rel="stylesheet" href="{{asset('/css/swiper-bundle.min.css')}}" />
         <link rel="stylesheet" href="{{asset('/css/aos.css')}}" />
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
      
 
    
@@ -39,12 +40,23 @@
                 >
                     نرعاك بثقة, نداويك بعناية
                 </p>
+                <div  id="hidden">
+                 <p
+                    style="
+                      
+                        font-family: Tienne;
+                        font-size: 55px;
+                        font-weight: bold;
+                        color: red;
+                    ">ندفنك بأبشع الطرق</p>
+                </div>
+               
 
              
             </div>
             <div id="line"></div>
 
-            <h2 class="heads" id="who-us">من نحن</h2>
+            <h2 class="heads " id="who-us">من نحن</h2>
 
             <div id="con1" data-aos="fade-up" data-aos-duration="1500">
                 <div id="who">
@@ -75,8 +87,6 @@
                         <li>التطعيمات الأساسية</li>
                     </ul>
                 </div>
-                
-                
 
                 <div class="item" data-aos="fade-up" data-aos-duration="2000">
                 <img src="{{asset('/images/kid.png')}}" alt="" />

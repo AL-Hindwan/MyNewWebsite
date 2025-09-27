@@ -702,6 +702,31 @@ header a:hover::after {
   text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+#hidden{
+  height:100px;
+  width: 30%;
+  margin-right: -45%;
+text-align: right;
+
+ position: absolute;
+
+
+
+ top: 500px;
+}
+#hidden p {
+  display: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+#hidden:hover p {
+  display: block;
+  animation: fadeIn 1s ease-in-out;
+  cursor: pointer;
+  font-size: 40px;
+}
 
 
 

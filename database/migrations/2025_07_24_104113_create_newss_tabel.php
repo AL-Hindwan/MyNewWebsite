@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
+    
         Schema::create('newss_tabel', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('title');       // عنوان الخبر
+    $table->text('content');       // محتوى الخبر
+    $table->text('summary');
+    $table->string('image')->nullable(); // صورة للخبر
+    $table->timestamp('published_at');   // وقت النشر
+    $table->timestamps();
+});
+
     }
 
     /**
