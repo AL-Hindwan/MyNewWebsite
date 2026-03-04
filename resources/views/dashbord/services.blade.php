@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة الخدمات - عيادة الشفاء</title>
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,9 +17,12 @@
             </div>
             <div class="user-actions">
                 <span class="username">مدير النظام</span>
-                <a href="#" id="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
-                </a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" id="logout-btn" style="background: none; border: none; color: inherit; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </button>
+                </form>
             </div>
         </nav>
 
@@ -30,6 +33,7 @@
                 <li class="active"><a href="{{ route('servicesdash') }}"><i class="fas fa-procedures"></i> الخدمات</a></li>
                 <li><a href="{{ route('doctordash') }}"><i class="fas fa-user-md"></i> الأطباء</a></li>
                 <li><a href="{{ route('newsdash') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
+                <li><a href="{{ route('about_us.dashboard') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
             </ul>
         </aside>
         <!-- المحتوى الرئيسي -->
@@ -65,31 +69,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- خدمة 1 -->
+                            @foreach($services as $service)
                             <tr>
-                                <td>1</td>
+                                <td>{{ $service->id }}</td>
                                 <td>
-                                    <img src="images/service1.jpg" alt="طب الأطفال" class="thumbnail">
+                                    @if($service->icon)
+                                        <img src="{{ 'data:image/jpeg;base64,' . $service->icon }}" alt="{{ $service->title }}" class="thumbnail">
+                                    @else
+                                        <img src="images/default-service.jpg" alt="صورة افتراضية" class="thumbnail">
+                                    @endif
                                 </td>
-                                <td>طب الأطفال</td>
-                                <td>رعاية متكاملة للأطفال من الولادة حتى المراهقة</td>
+                                <td>{{ $service->title }}</td>
+                                <td>{{ Str::limit($service->description, 50) }}</td>
                                 <td>
-                                  
+                                    {{ $service->details ? Str::limit($service->details, 30) : '' }}
                                 </td>
                                 <td>
-                                    <a href="#" class="btn-edit">
+                                    <a href="{{ route('services.edit', $service->id) }}" class="btn-edit" title="تعديل">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button class="btn-delete" data-id="1">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    <a href="{{ route('services.show', $service->id) }}" class="btn-preview" title="عرض">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" onclick="return confirm('هل أنت متأكد من حذف هذه الخدمة؟')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                            
-                       
-                            
-                        
-                          
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +110,7 @@
         </main>
     </div>
 
-    <script src="js/admin.js"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // إغلاق التنبيهات
@@ -123,13 +134,6 @@
                 });
             });
 
-            // زر تسجيل الخروج
-            document.getElementById('logout-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                if(confirm('هل أنت متأكد من تسجيل الخروج؟')) {
-                    window.location.href = 'login.html';
-                }
-            });
 
             // عرض رسالة نجاح
             function showAlert(message) {

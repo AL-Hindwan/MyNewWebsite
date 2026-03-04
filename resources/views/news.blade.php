@@ -17,87 +17,17 @@
       <h2 class="heads">اخر الأخبار</h2>
 
       <div class="container2">
+        @foreach($news as $item)
         <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-      <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
+      <img src="{{ is_array($item->image) && count($item->image) > 0 ? 'data:image/jpeg;base64,' . $item->image[0] : asset('/images/news.jpg') }}" alt="" />
+          <p class="title">{{ $item->title }}</p>
           <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
+            {{ $item->summary ?: Str::limit($item->content, 100) }}
           </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href="./details.html#datails"> التفاصيل</a>
+          <p class="date">{{ $item->published_at ? $item->published_at->format('d F Y') : 'N/A' }}</p>
+          <a href="{{ route('details', $item->id) }}"> التفاصيل</a>
         </div>
-
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-        <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-             <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-      <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-             <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-            <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-             <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
-        <div class="news_shape" data-aos="fade-up" data-aos-duration="1000">
-            <img src="{{asset('/images/news.jpg')}}" alt="" />
-          <p class="title">افتتاح قسم الأشعة الجديد</p>
-          <p class="text">
-            تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة دقيقة وسريعة
-            للمراجعين.
-          </p>
-          <p class="date">10 يوليو 2025</p>
-          <a href=""> التفاصيل</a>
-        </div>
+        @endforeach
       </div>
     </main>
 

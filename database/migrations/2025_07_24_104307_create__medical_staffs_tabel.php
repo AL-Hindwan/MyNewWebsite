@@ -19,7 +19,7 @@ return new class extends Migration
     $table->string('name');       // اسم الطبيب
     $table->string('specialty');  // التخصص
     $table->text('bio');          // نبذة تعريفية
-    $table->string('image');      // صورة الطبيب
+    $table->string('image')->nullable();      // صورة الطبيب
     $table->timestamps();
 });
 

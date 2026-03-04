@@ -16,17 +16,24 @@
                 <img src="{{asset('/images/logo.png')}}" alt="شعار العيادة">
                 <h1>إدارة المحتوى</h1>
             </div>
+            <div class="nav-actions">
+                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn-logout">تسجيل الخروج</button>
+                </form>
+            </div>
         </nav>
 
         <!-- القائمة الجانبية -->
         <aside class="admin-sidebar">
             <ul>
                 <li class="active"><a href="{{ route('homedash') }}"><i class="icon-dashboard fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-              
+
                 <li><a href="{{ route('servicesdash') }}"><i class="icon-services fas fa-procedures"></i> الخدمات</a></li>
                 <li><a href="{{ route('doctordash') }}"><i class="icon-doctors fas fa-user-md"></i> الأطباء</a></li>
                 <li><a href="{{ route('newsdash') }}"><i class="icon-news far fa-newspaper"></i> الأخبار</a></li>
-              
+                <li><a href="{{ route('about_us.dashboard') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
+
             </ul>
         </aside>
 
@@ -40,19 +47,19 @@
             <!-- إحصائيات سريعة -->
             <div class="quick-stats">
                 <div class="stat-card">
-                    <h3>5</h3>
+                    <h3>{{ $pagesCount }}</h3>
                     <p>صفحات</p>
                 </div>
                 <div class="stat-card">
-                    <h3>8</h3>
+                    <h3>{{ $servicesCount }}</h3>
                     <p>خدمات</p>
                 </div>
                 <div class="stat-card">
-                    <h3>6</h3>
+                    <h3>{{ $doctorsCount }}</h3>
                     <p>أطباء</p>
                 </div>
                 <div class="stat-card">
-                    <h3>12</h3>
+                    <h3>{{ $newsCount }}</h3>
                     <p>أخبار</p>
                 </div>
             </div>
@@ -61,7 +68,6 @@
             <section class="content-section">
                 <div class="section-header">
                     <h3>آخر التعديلات</h3>
-                    <a href="#" class="btn">إضافة جديد</a>
                 </div>
                 
                 <div class="content-table">
@@ -76,17 +82,26 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($recentItems as $index => $item)
                             <tr>
-                                <td>1</td>
-                                <td>الصفحة الرئيسية</td>
-                                <td>صفحة</td>
-                                <td>2023/10/15</td>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $item['title'] }}</td>
+                                <td>{{ $item['type'] }}</td>
+                                <td>{{ $item['updated_at'] ? $item['updated_at']->format('Y/m/d') : 'غير محدد' }}</td>
                                 <td>
-                                    <button class="btn-edit"><i class="icon-edit"></i></button>
-                                    <button class="btn-preview"><i class="icon-eye"></i></button>
+                                    <a href="{{ route($item['route'], $item['id']) }}" class="btn-edit" title="تعديل"><i class="fas fa-edit"></i></a>
+                                    @if($item['type'] == 'خبر')
+                                        <a href="{{ route('details', $item['id']) }}" class="btn-preview" title="عرض"><i class="fas fa-eye"></i></a>
+                                    @elseif($item['type'] == 'طبيب')
+                                        <a href="{{ route('medical_staff.show', $item['id']) }}" class="btn-preview" title="عرض"><i class="fas fa-eye"></i></a>
+                                    @elseif($item['type'] == 'خدمة')
+                                        <a href="{{ route('services.show', $item['id']) }}" class="btn-preview" title="عرض"><i class="fas fa-eye"></i></a>
+                                    @else
+                                        <button class="btn-preview" title="عرض" disabled><i class="fas fa-eye"></i></button>
+                                    @endif
                                 </td>
                             </tr>
-                            <!-- صفوف أخرى -->
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

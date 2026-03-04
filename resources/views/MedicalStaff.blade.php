@@ -17,85 +17,16 @@
       <h2 class="heads">الكادر الطبي</h2>
 
       <div class="container">
+        @foreach($medicalStaff as $staff)
         <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-          <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
+          <img src="{{ $staff->image ? 'data:image/jpeg;base64,' . $staff->image : asset('/images/doctor.jpg') }}" alt="" />
+          <p>{{ $staff->name }}</p>
           <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
+            <dd>{{ $staff->specialty }}</dd>
+            <li>{{ $staff->bio }}</li>
           </dl>
         </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-            <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-           <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-           <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-           <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-        <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-            <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
-
-        <div class="doctor" data-aos="zoom-in" data-aos-duration="1000">
-         <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-          <p>د. عادل مطهر</p>
-          <dl type="circle">
-            <dd>أخصائي العظام والمفاصل</dd>
-            <li>علاج الانزلاقات والغضاريف</li>
-            <li>إصابات الملاعب والآلام المزمنة</li>
-          </dl>
-        </div>
+        @endforeach
       </div>
     </main>
   @include('compnant.footer')

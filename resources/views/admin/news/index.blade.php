@@ -32,8 +32,7 @@
                 <li><a href="{{ route('homedash') }}"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
                 <li><a href="{{ route('servicesdash') }}"><i class="fas fa-procedures"></i> الخدمات</a></li>
                 <li><a href="{{ route('doctordash') }}"><i class="fas fa-user-md"></i> الأطباء</a></li>
-                <li class="active"><a href="{{ route('newsdash') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
-                <li><a href="{{ route('about_us.dashboard') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                <li class="active"><a href="{{ route('news.index') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
             </ul>
         </aside>
 
@@ -56,7 +55,7 @@
                         <i class="fas fa-plus"></i> إضافة خبر جديد
                     </a>
                 </div>
-                
+
                 <div class="content-table">
                     <table>
                         <thead>
@@ -96,8 +95,8 @@
                                 <td>{{ Str::limit($newsItem->summary, 30) }}</td>
                                 <td>{{ Str::limit($newsItem->content, 30) }}</td>
                                 <td>
-                                    <a href="{{ route('news.edit', $newsItem->id) }}" class="btn-edit" title="تعديل"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('details', $newsItem->id) }}" class="btn-preview" title="عرض"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('news.edit', $newsItem->id) }}" class="btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('details', $newsItem->id) }}" class="btn-preview"><i class="fas fa-eye"></i></a>
                                     <form action="{{ route('news.destroy', $newsItem->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
@@ -112,7 +111,7 @@
                     </table>
                 </div>
 
-             
+
             </div>
         </main>
     </div>

@@ -60,14 +60,9 @@
 
             <div id="con1" data-aos="fade-up" data-aos-duration="1500">
                 <div id="who">
-                    <img src="{{asset('/images/who.jpg')}}" alt="" id="who_img" />
+                    <img src="{{ $aboutUs && $aboutUs->image ? 'data:image/jpeg;base64,' . $aboutUs->image : asset('/images/who.jpg') }}" alt="" id="who_img" />
                     <p>
-                        عيادة الشفاء الطبية هي مركز صحي حديث يهدف إلى توفير
-                        رعاية طبية متكاملة وفق أعلى المعايير، وبأيدي كادر طبي
-                        متميز. نلتزم بتقديم تجربة علاجية مريحة وآمنة، في بيئة
-                        ترحب بالجميع وتضع صحة المريض في المقام الأول. نعمل على
-                        تعزيز الثقة بين الطبيب والمراجع، ونسعى لبناء علاقة صحية
-                        مستمرة تقوم على الاحترام والاهتمام.
+                        {{ $aboutUs ? $aboutUs->content : 'عيادة الشفاء الطبية هي مركز صحي حديث يهدف إلى توفير رعاية طبية متكاملة وفق أعلى المعايير، وبأيدي كادر طبي متميز. نلتزم بتقديم تجربة علاجية مريحة وآمنة، في بيئة ترحب بالجميع وتضع صحة المريض في المقام الأول. نعمل على تعزيز الثقة بين الطبيب والمراجع، ونسعى لبناء علاقة صحية مستمرة تقوم على الاحترام والاهتمام.' }}
                     </p>
                 </div>
             </div>
@@ -78,35 +73,18 @@
             <h2 class="heads" id="servies">الخدمات والتخصصات</h2>
 
             <div class="container">
-                <div class="item" data-aos="fade-up" data-aos-duration="1000">
-                    <img src="{{asset('/images/kid.png')}}" alt="" />
-                    <p>طب الأطفال</p>
+                @foreach($services as $service)
+                <div class="item" data-aos="fade-up" data-aos-duration="{{ 1000 + ($loop->index * 1000) }}">
+                    <img src="{{ $service->icon ? 'data:image/jpeg;base64,' . $service->icon : asset('/images/kid.png') }}" alt="" />
+                    <p>{{ $service->title }}</p>
                     <ul type="circle">
-                        <li>الفحوصات الروتينية والنمو</li>
-                        <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-                        <li>التطعيمات الأساسية</li>
+                        <li>{{ $service->description }}</li>
+                        @if($service->details)
+                        <li>{{ $service->details }}</li>
+                        @endif
                     </ul>
                 </div>
-
-                <div class="item" data-aos="fade-up" data-aos-duration="2000">
-                <img src="{{asset('/images/kid.png')}}" alt="" />
-                    <p>طب الأطفال</p>
-                    <ul type="circle">
-                        <li>الفحوصات الروتينية والنمو</li>
-                        <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-                        <li>التطعيمات الأساسية</li>
-                    </ul>
-                </div>
-                <div class="item" data-aos="fade-up" data-aos-duration="3000">
-             <img src="{{asset('/images/kid.png')}}" alt="" />
-                    <p>طب الأطفال</p>
-                    <ul type="circle">
-                        <li>الفحوصات الروتينية والنمو</li>
-                        <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-                        <li>التطعيمات الأساسية</li>
-                    </ul>
-                </div>
-            
+                @endforeach
             </div>
 
             <div class="center-container">
@@ -119,45 +97,20 @@
             <h2 class="heads" id="staff">الكادر الطبي</h2>
 
             <div class="container">
+                @foreach($medicalStaff as $staff)
                 <div
                     class="doctor"
                     data-aos="zoom-in-left"
                     data-aos-duration="1000"
                 >
-                    <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-                    <p>د. عادل مطهر</p>
+                    <img src="{{ $staff->image ? 'data:image/jpeg;base64,' . $staff->image : asset('/images/doctor.jpg') }}" alt="" />
+                    <p>{{ $staff->name }}</p>
                     <dl type="circle">
-                        <dd>أخصائي العظام والمفاصل</dd>
-                        <li>علاج الانزلاقات والغضاريف</li>
-                        <li>إصابات الملاعب والآلام المزمنة</li>
+                        <dd>{{ $staff->specialty }}</dd>
+                        <li>{{ $staff->bio }}</li>
                     </dl>
                 </div>
-                <div
-                    class="doctor"
-                    data-aos="zoom-out-down"
-                    data-aos-duration="1000"
-                >
-        <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-                    <p>د. عادل مطهر</p>
-                    <dl type="circle">
-                        <dd>أخصائي العظام والمفاصل</dd>
-                        <li>علاج الانزلاقات والغضاريف</li>
-                        <li>إصابات الملاعب والآلام المزمنة</li>
-                    </dl>
-                </div>
-                <div
-                    class="doctor"
-                    data-aos="zoom-in-right"
-                    data-aos-duration="1000"
-                >
-                      <img src="{{asset('/images/doctor.jpg')}}" alt="" />
-                    <p>د. عادل مطهر</p>
-                    <dl type="circle">
-                        <dd>أخصائي العظام والمفاصل</dd>
-                        <li>علاج الانزلاقات والغضاريف</li>
-                        <li>إصابات الملاعب والآلام المزمنة</li>
-                    </dl>
-                </div>
+                @endforeach
             </div>
 
             <div class="center-container">
@@ -168,39 +121,17 @@
             <h2 class="heads" id="news">اخر الأخبار</h2>
 
             <div class="container">
+                @foreach($news as $item)
                 <div class="news" data-aos="zoom-in" data-aos-duration="1500">
-                     <img src="{{asset('/images/news.jpg')}}" alt="" />
-                    <h3>افتتاح قسم الأشعة الجديد</h3>
+                     <img src="{{ $item->image && is_array($item->image) && count($item->image) > 0 ? 'data:image/jpeg;base64,' . $item->image[0] : asset('/images/news.jpg') }}" alt="" />
+                     <h3>{{ $item->title }}</h3>
                     <p>
-                        تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة
-                        دقيقة وسريعة للمراجعين.
+                        {{ $item->summary ?: Str::limit($item->content, 100) }}
                     </p>
-                    <span>10 يوليو 2025</span>
-                    <a href="">التفاصيل</a>
+                    <span>{{ $item->published_at ? $item->published_at->format('d F Y') : 'N/A' }}</span>
+                    <a href="{{ route('details', $item->id) }}">التفاصيل</a>
                 </div>
-                
-
-                <div class="news" data-aos="zoom-in" data-aos-duration="1500">
-                       <img src="{{asset('/images/news.jpg')}}" alt="" />
-                    <h3>افتتاح قسم الأشعة الجديد</h3>
-                    <p>
-                        تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة
-                        دقيقة وسريعة للمراجعين.
-                    </p>
-                    <span>10 يوليو 2025</span>
-                    <a href="">التفاصيل</a>
-                </div>
-
-                <div class="news" data-aos="zoom-in" data-aos-duration="1500">
-                       <img src="{{asset('/images/news.jpg')}}" alt="" />
-                    <h3>افتتاح قسم الأشعة الجديد</h3>
-                    <p>
-                        تم تدشين قسم الأشعة الجديد بأحدث الأجهزة لتوفير خدمة
-                        دقيقة وسريعة للمراجعين.
-                    </p>
-                    <span>10 يوليو 2025</span>
-                    <a href="">التفاصيل</a>
-                </div>
+                @endforeach
             </div>
 
             <div class="center-container">

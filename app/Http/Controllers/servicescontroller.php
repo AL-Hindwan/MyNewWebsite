@@ -8,7 +8,8 @@ use App\Models\services;
 class servicescontroller extends Controller
 {
    public function services()
-    {
-        return view('services');
-    }
+     {
+         $services = services::all();
+         return view('services', compact('services'));
+     }
 }

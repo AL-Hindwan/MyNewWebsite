@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\news;
+use App\Models\News;
 
 
 class detailscontroller extends Controller
 {
-  
-    public function details()
-    {
-        return view('details');
-    }
+
+     public function details($id)
+     {
+         $newsItem = News::findOrFail($id);
+         return view('details', compact('newsItem'));
+     }
 }

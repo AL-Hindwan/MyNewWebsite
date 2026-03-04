@@ -17,21 +17,25 @@
             </div>
             <div class="user-actions">
                 <span class="username">مدير النظام</span>
-                <a href="#" id="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
-                </a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" id="logout-btn" style="background: none; border: none; color: inherit; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </button>
+                </form>
             </div>
         </nav>
 
         <!-- القائمة الجانبية -->
         <aside class="admin-sidebar">
-            <ul>
-                <li><a href="{{ route('homedash') }}"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
-                <li><a href="{{ route('servicesdash') }}"><i class="fas fa-procedures"></i> الخدمات</a></li>
-                <li class="active"><a href="{{ route('doctordash') }}"><i class="fas fa-user-md"></i> الأطباء</a></li>
-                <li><a href="{{ route('newsdash') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
-            </ul>
-        </aside>
+             <ul>
+                 <li><a href="{{ route('homedash') }}"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
+                 <li><a href="{{ route('servicesdash') }}"><i class="fas fa-procedures"></i> الخدمات</a></li>
+                 <li class="active"><a href="{{ route('doctordash') }}"><i class="fas fa-user-md"></i> الأطباء</a></li>
+                 <li><a href="{{ route('newsdash') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
+                 <li><a href="{{ route('about_us.dashboard') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
+             </ul>
+         </aside>
 
         <!-- المحتوى الرئيسي -->
         <main class="admin-content">
@@ -67,23 +71,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- طبيب 1 -->
+                            @foreach($medicalStaff as $staff)
                             <tr>
-                                <td>1</td>
-                                <td><img src="{{ asset('images/doctor1.jpg') }}" alt="د. عادل مطهر" class="thumbnail"></td>
-                                <td>د. عادل مطهر</td>
-                                <td>أخصائي العظام والمفاصل</td>
-                                <td></td>
+                                <td>{{ $staff->id }}</td>
+                                <td>
+                                    @if($staff->image)
+                                        @if(str_starts_with($staff->image, 'iVBOR'))
+                                            <img src="data:image/png;base64,{{ $staff->image }}" alt="{{ $staff->name }}" class="thumbnail">
+                                        @else
+                                            <img src="{{ asset('storage/' . $staff->image) }}" alt="{{ $staff->name }}" class="thumbnail">
+                                        @endif
+                                    @else
+                                        <img src="{{ asset('images/doctor.jpg') }}" alt="صورة افتراضية" class="thumbnail">
+                                    @endif
+                                </td>
+                                <td>{{ $staff->name }}</td>
+                                <td>{{ $staff->specialty }}</td>
+                                <td>{{ Str::limit($staff->bio, 30) }}</td>
                                 <td></td>
                                 <td>
-                                    <a href="edit-doctor.html" class="btn-edit"><i class="fas fa-edit"></i></a>
-                                    <a href="doctor-profile.html" class="btn-preview"><i class="fas fa-eye"></i></a>
-                                    <button class="btn-delete" data-id="1"><i class="fas fa-trash"></i></button>
+                                    <a href="{{ route('medical_staff.edit', $staff->id) }}" class="btn-edit" title="تعديل"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('medical_staff.show', $staff->id) }}" class="btn-preview" title="عرض"><i class="fas fa-eye"></i></a>
+                                    <form action="{{ route('medical_staff.destroy', $staff->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" onclick="return confirm('هل أنت متأكد من حذف هذا الطبيب؟')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                         
-                            
-                       
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -117,13 +135,6 @@
                 });
             });
 
-            // زر تسجيل الخروج
-            document.getElementById('logout-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                if(confirm('هل أنت متأكد من تسجيل الخروج؟')) {
-                    window.location.href = 'login.html';
-                }
-            });
 
             // عرض رسالة نجاح
             function showAlert(message) {

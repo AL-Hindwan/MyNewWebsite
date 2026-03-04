@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة الأخبار - عيادة الشفاء</title>
+    <title>إدارة الأطباء - عيادة الشفاء</title>
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -31,17 +31,16 @@
             <ul>
                 <li><a href="{{ route('homedash') }}"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a></li>
                 <li><a href="{{ route('servicesdash') }}"><i class="fas fa-procedures"></i> الخدمات</a></li>
-                <li><a href="{{ route('doctordash') }}"><i class="fas fa-user-md"></i> الأطباء</a></li>
-                <li class="active"><a href="{{ route('newsdash') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
-                <li><a href="{{ route('about_us.dashboard') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                <li class="active"><a href="{{ route('medical_staff.index') }}"><i class="fas fa-user-md"></i> الأطباء</a></li>
+                <li><a href="{{ route('news.index') }}"><i class="far fa-newspaper"></i> الأخبار</a></li>
             </ul>
         </aside>
 
         <!-- المحتوى الرئيسي -->
         <main class="admin-content">
             <div class="content-header">
-                <h2>إدارة الأخبار والتحديثات</h2>
-                <p>يمكنك إضافة أخبار العيادة وتحديثاتها للمرضى والزوار</p>
+                <h2>إدارة الكادر الطبي</h2>
+                <p>قائمة بأطباء العيادة والمعلومات الخاصة بهم</p>
             </div>
 
             <div id="success-alert" class="alert alert-success" style="display:none;">
@@ -51,57 +50,51 @@
 
             <div class="content-card">
                 <div class="card-header">
-                    <h3 class="card-title">آخر الأخبار</h3>
-                    <a href="{{ route('new_news') }}" class="btn">
-                        <i class="fas fa-plus"></i> إضافة خبر جديد
+                    <h3 class="card-title">قائمة الأطباء</h3>
+                    <a href="{{ route('addDoctor') }}" class="btn">
+                        <i class="fas fa-plus"></i> إضافة طبيب جديد
                     </a>
                 </div>
-                
+
                 <div class="content-table">
                     <table>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>الصورة</th>
-                                <th>عنوان الخبر</th>
-                                <th>التاريخ</th>
+                                <th>اسم الطبيب</th>
+                                <th>التخصص</th>
                                 <th></th>
                                 <th></th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($news as $newsItem)
+                            @foreach($medicalStaff as $staff)
                             <tr>
-                                <td>{{ $newsItem->id }}</td>
+                                <td>{{ $staff->id }}</td>
                                 <td>
-                                    @if($newsItem->image && is_array($newsItem->image) && count($newsItem->image) > 0)
-                                        @if(str_starts_with($newsItem->image[0], 'iVBOR'))
-                                            <img src="data:image/png;base64,{{ $newsItem->image[0] }}" alt="{{ $newsItem->title }}" class="thumbnail">
+                                    @if($staff->image)
+                                        @if(str_starts_with($staff->image, 'iVBOR'))
+                                            <img src="data:image/png;base64,{{ $staff->image }}" alt="{{ $staff->name }}" class="thumbnail">
                                         @else
-                                            <img src="{{ asset('storage/' . $newsItem->image[0]) }}" alt="{{ $newsItem->title }}" class="thumbnail">
-                                        @endif
-                                    @elseif($newsItem->image && !is_array($newsItem->image))
-                                        @if(str_starts_with($newsItem->image, 'iVBOR'))
-                                            <img src="data:image/png;base64,{{ $newsItem->image }}" alt="{{ $newsItem->title }}" class="thumbnail">
-                                        @else
-                                            <img src="{{ asset('storage/' . $newsItem->image) }}" alt="{{ $newsItem->title }}" class="thumbnail">
+                                            <img src="{{ asset('storage/' . $staff->image) }}" alt="{{ $staff->name }}" class="thumbnail">
                                         @endif
                                     @else
-                                        <img src="{{ asset('images/news.jpg') }}" alt="صورة افتراضية" class="thumbnail">
+                                        <img src="{{ asset('images/doctor.jpg') }}" alt="صورة افتراضية" class="thumbnail">
                                     @endif
                                 </td>
-                                <td>{{ $newsItem->title }}</td>
-                                <td>{{ $newsItem->published_at ? $newsItem->published_at->format('Y/m/d') : 'غير محدد' }}</td>
-                                <td>{{ Str::limit($newsItem->summary, 30) }}</td>
-                                <td>{{ Str::limit($newsItem->content, 30) }}</td>
+                                <td>{{ $staff->name }}</td>
+                                <td>{{ $staff->specialty }}</td>
+                                <td>{{ Str::limit($staff->bio, 30) }}</td>
+                                <td></td>
                                 <td>
-                                    <a href="{{ route('news.edit', $newsItem->id) }}" class="btn-edit" title="تعديل"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('details', $newsItem->id) }}" class="btn-preview" title="عرض"><i class="fas fa-eye"></i></a>
-                                    <form action="{{ route('news.destroy', $newsItem->id) }}" method="POST" style="display:inline;">
+                                    <a href="{{ route('medical_staff.edit', $staff->id) }}" class="btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn-preview"><i class="fas fa-eye"></i></a>
+                                    <form action="{{ route('medical_staff.destroy', $staff->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn-delete" onclick="return confirm('هل أنت متأكد من حذف هذا الخبر؟')">
+                                        <button type="submit" class="btn-delete" onclick="return confirm('هل أنت متأكد من حذف هذا الطبيب؟')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -112,7 +105,7 @@
                     </table>
                 </div>
 
-             
+
             </div>
         </main>
     </div>
@@ -130,17 +123,16 @@
             // تأكيد قبل الحذف
             document.querySelectorAll('.btn-delete').forEach(button => {
                 button.addEventListener('click', function(e) {
-                    if (confirm('هل أنت متأكد من حذف هذا الخبر؟')) {
+                    if (confirm('هل أنت متأكد من حذف هذا الطبيب؟')) {
                         const row = this.closest('tr');
                         row.style.opacity = '0';
                         setTimeout(() => {
                             row.remove();
-                            showAlert('تم حذف الخبر بنجاح');
+                            showAlert('تم حذف الطبيب بنجاح');
                         }, 300);
                     }
                 });
             });
-
 
             // عرض رسالة نجاح
             function showAlert(message) {

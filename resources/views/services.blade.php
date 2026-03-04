@@ -17,62 +17,18 @@
       <h2 class="heads" id="b">الخدمات والتخصصات</h2>
 
       <div class="container">
+        @foreach($services as $service)
         <div class="item" data-aos="fade-up" data-aos-duration="1500">
-           <img src="{{asset('/images/kid.png')}}" alt="" />
-          <p>طب الأطفال</p>
+           <img src="{{ $service->icon ? 'data:image/jpeg;base64,' . $service->icon : asset('/images/kid.png') }}" alt="" />
+          <p>{{ $service->title }}</p>
           <ul type="circle">
-            <li>الفحوصات الروتينية والنمو</li>
-            <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-            <li>التطعيمات الأساسية</li>
+            <li>{{ $service->description }}</li>
+            @if($service->details)
+            <li>{{ $service->details }}</li>
+            @endif
           </ul>
         </div>
-
-        <div class="item" data-aos="fade-up" data-aos-duration="1500">
-          <img src="{{asset('/images/kid.png')}}" alt="" />
-          <p>طب الأطفال</p>
-          <ul type="circle">
-            <li>الفحوصات الروتينية والنمو</li>
-            <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-            <li>التطعيمات الأساسية</li>
-          </ul>
-        </div>
-
-        <div class="item" data-aos="fade-up" data-aos-duration="1500">
-   <img src="{{asset('/images/kid.png')}}" alt="" />
-          <p>طب الأطفال</p>
-          <ul type="circle">
-            <li>الفحوصات الروتينية والنمو</li>
-            <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-            <li>التطعيمات الأساسية</li>
-          </ul>
-        </div>
-        <div class="item" data-aos="fade-up" data-aos-duration="1500">
-           <img src="{{asset('/images/kid.png')}}" alt="" />
-          <p>طب الأطفال</p>
-          <ul type="circle">
-            <li>الفحوصات الروتينية والنمو</li>
-            <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-            <li>التطعيمات الأساسية</li>
-          </ul>
-        </div>
-        <div class="item" data-aos="fade-up" data-aos-duration="1500">
-            <img src="{{asset('/images/kid.png')}}" alt="" />
-          <p>طب الأطفال</p>
-          <ul type="circle">
-            <li>الفحوصات الروتينية والنمو</li>
-            <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-            <li>التطعيمات الأساسية</li>
-          </ul>
-        </div>
-        <div class="item" data-aos="fade-up" data-aos-duration="1500">
-           <img src="{{asset('/images/kid.png')}}" alt="" />
-          <p>طب الأطفال</p>
-          <ul type="circle">
-            <li>الفحوصات الروتينية والنمو</li>
-            <li>علاج الأمراض الموسمية وإلتهابات الأطفال</li>
-            <li>التطعيمات الأساسية</li>
-          </ul>
-        </div>
+        @endforeach
       </div>
     </main>
   @include('compnant.footer')
